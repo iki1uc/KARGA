@@ -19,28 +19,36 @@ pre {
     border:1px solid #333;
     border-radius:6px;
 }
+
+/* RESPO-Bild / Symbol */
+.respoImage {
+    width:160px;
+    height:160px;
+    margin:20px auto;
+    border-radius:50%;
+    background: radial-gradient(circle, #001a33 0%, #003355 40%, #000 100%);
+    box-shadow: 0 0 40px #0ff, inset 0 0 40px #000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:60px;
+    color:#6cf;
+    text-shadow:0 0 20px #0ff;
+}
 </style>
 
 <script type="module">
-async function load(file) {
-    return `LOAD:${file}:OK`;
-}
-
 async function start() {
 
-    /* ORT */
-    const ORT = {
+    const RESPO_ORT = {
         ROOT: "Creator / NC",
         MODE: "Direkt-REAL",
-        STATE: "aktiv",
-        LEVEL: "4er-Richtigkeit",
-        READY: "82%"
+        READY: "82%",
+        LEVEL: "4er-Richtigkeit"
     };
 
-    /* LAGE */
-    const LAGE = await load("LAGE.room");
+    const LAGE = "LOAD:LAGE.room:OK";
 
-    /* RESPO */
     const RESPO = {
         NAME: "RESPO-Ort-LAGE",
         STATUS: "VERBUNDEN",
@@ -48,9 +56,8 @@ async function start() {
         ACTIVE: true
     };
 
-    /* Anzeigen */
     document.getElementById("ort").textContent =
-        JSON.stringify(ORT, null, 2);
+        JSON.stringify(RESPO_ORT, null, 2);
 
     document.getElementById("lage").textContent =
         JSON.stringify(LAGE, null, 2);
@@ -65,6 +72,9 @@ async function start() {
 <body onload="start()">
 
 <h1>RESPO · ORT‑LAGE</h1>
+
+<!-- DAS BILD / SYMBOL -->
+<div class="respoImage">⊙</div>
 
 <h2>ORT</h2>
 <pre id="ort">Lade…</pre>
