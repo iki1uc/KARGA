@@ -1,4 +1,79 @@
-RESPO.ORT = ROOT / Creator / NC
-RESPO.ORT.MODE = Direkt-REAL
-RESPO.ORT.READY = 82%
-RESPO.ORT.LEVEL = 4er-Richtigkeit
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>RESPO · ORT‑LAGE</title>
+
+<style>
+body {
+    background:#000;
+    color:#0ff;
+    font-family:Consolas;
+    padding:20px;
+}
+h1 { color:#6cf; }
+h2 { color:#0f0; margin-top:25px; }
+pre {
+    background:#111;
+    padding:12px;
+    border:1px solid #333;
+    border-radius:6px;
+}
+</style>
+
+<script type="module">
+async function load(file) {
+    return `LOAD:${file}:OK`;
+}
+
+async function start() {
+
+    /* ORT */
+    const ORT = {
+        ROOT: "Creator / NC",
+        MODE: "Direkt-REAL",
+        STATE: "aktiv",
+        LEVEL: "4er-Richtigkeit",
+        READY: "82%"
+    };
+
+    /* LAGE */
+    const LAGE = await load("LAGE.room");
+
+    /* RESPO */
+    const RESPO = {
+        NAME: "RESPO-Ort-LAGE",
+        STATUS: "VERBUNDEN",
+        TYPE: "ORT-LAGE",
+        ACTIVE: true
+    };
+
+    /* Anzeigen */
+    document.getElementById("ort").textContent =
+        JSON.stringify(ORT, null, 2);
+
+    document.getElementById("lage").textContent =
+        JSON.stringify(LAGE, null, 2);
+
+    document.getElementById("respo").textContent =
+        JSON.stringify(RESPO, null, 2);
+}
+</script>
+
+</head>
+
+<body onload="start()">
+
+<h1>RESPO · ORT‑LAGE</h1>
+
+<h2>ORT</h2>
+<pre id="ort">Lade…</pre>
+
+<h2>LAGE</h2>
+<pre id="lage">Lade…</pre>
+
+<h2>RESPO</h2>
+<pre id="respo">Lade…</pre>
+
+</body>
+</html>
