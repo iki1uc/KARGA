@@ -1,40 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>RESPO — ORT‑LAGE Engine</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #000;
+        color: #66ccff;
+        font-family: monospace;
+        text-align: center;
+        padding-top: 5vh;
+        letter-spacing: 2px;
+    }
+
+    canvas {
+        display: block;
+        margin: 0 auto;
+        background: #000;
+        border: none;
+    }
+
+    h1 {
+        font-weight: normal;
+    }
+</style>
+
+</head>
+<body>
+
+<h1>RESPO — ORT‑LAGE</h1>
+
+<canvas id="lage" width="900" height="600"></canvas>
+
 <script type="module">
 import { OSF_BEAM, OSF_PHI, OSF_STATION } from "./OUR.js";
+import { OSF_VECTOR } from "./OSF.js";
 
-async function start() {
+// ---------------------------------------------
+// QI / IQQ (Ort‑LAGE Intellekt)
+// ---------------------------------------------
+const QI  = OSF_PHI.VALUE / Math.PI;     // QI = φ∞ / π
+const IQQ = OSF_VECTOR.STABIL();         // IQQ = Stabilität
 
-    const RESPO_ORT = {
-        ROOT: "Creator / NC",
-        MODE: "Direkt-REAL",
-        READY: "82%",
-        LEVEL: "4er-Richtigkeit"
-    };
+// ---------------------------------------------
+// OSF‑Richtung
+// ---------------------------------------------
+const DIR = OSF_VECTOR.DIR();
 
-    const LAGE = "LOAD:LAGE.room:OK";
+// ---------------------------------------------
+// Canvas
+// ---------------------------------------------
+const ctx = document.getElementById("lage").getContext("2d");
 
-    const RESPO = {
-        NAME: "RESPO-Ort-LAGE",
-        STATUS: "VERBUNDEN",
-        TYPE: "ORT-LAGE",
-        ACTIVE: true
-    };
-
-    document.getElementById("ort").textContent =
-        JSON.stringify(RESPO_ORT, null, 2);
-
-    document.getElementById("lage").textContent =
-        JSON.stringify(LAGE, null, 2);
-
-    document.getElementById("respo").textContent =
-        JSON.stringify(RESPO, null, 2);
-
-    document.getElementById("osf_beam").textContent =
-        JSON.stringify(OSF_BEAM, null, 2);
-
-    document.getElementById("osf_phi").textContent =
-        JSON.stringify(OSF_PHI, null, 2);
-
-    document.getElementById("osf_station").textContent =
-        JSON.stringify(OSF_STATION, null, 2);
+// ---------------------------------------------
+// 756 Achsen erzeugen
+// ---------------------------------------------
+const AXES = [];
+for (let i = 0; i < 756; i++) {
+    AXES.push({
+        x: Math.sin(i * 0.01) * DIR.dx,
+        y: Math.cos(i * 0.01) * DIR.dy,
+        z: Math.sin(i * 0.02) * DIR.dz,
+        w: IQQ * QI * 0.01 * i
+    });
 }
+
+let t = 0;
+
+// ---------------------------------------------
+// ORT‑LAGE — Avatar‑Engine
+// ---------------------------------------------
+function animate(){
+    t += 0.01;
+    ctx.clearRect(0,0,900,600);
+
+    for (let i=0; i<AXES.length; i++){
+        const a = AXES[i];
+
+        // 4D Fade — ORT‑LAGE erscheint / verschwindet
+        const fade = Math.sin(t + a.w);
+        if (fade < 0.25) continue;
+
+        // ORT‑LAGE‑Avatar‑Form
+        const x = 450 + Math.sin(t + a.x * 0.002) * (200 + Math.sin(i*0.01)*20);
+        const y = 300 + Math.cos(t + a.y * 0.002) * (150 + Math.cos(i*0.01)*20);
+
+        ctx.fillStyle = `rgba(100, 200, 255, ${fade})`;
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    requestAnimationFrame(animate);
+}
+
+animate();
 </script>
+
+</body>
+</html>
