@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>RESPO · ORT‑LAGE</title>
+<title>RESPO · ORT‑LAGE · OSF</title>
 
 <style>
 body {
@@ -19,8 +19,6 @@ pre {
     border:1px solid #333;
     border-radius:6px;
 }
-
-/* RESPO-Bild / Symbol */
 .respoImage {
     width:160px;
     height:160px;
@@ -56,6 +54,30 @@ async function start() {
         ACTIVE: true
     };
 
+    const OSF_BEAM = {
+        ROOT: "NC/Creator",
+        LAGE: "REAL-4",
+        RESPO: "EDy.respoTMP",
+        ACTIVE: true,
+        SIGNAL: "BEAM:Φ∞"
+    };
+
+    const OSF_PHI = {
+        VALUE: Math.PI * (1 + Math.sqrt(5)) / 2,
+        LEVEL: "4er-Richtigkeit",
+        STATE: "∞‑Stabil",
+        READY: "82%"
+    };
+
+    const OSF_STATION = {
+        NAME: "OSF",
+        CORE: "ORT-LAGE",
+        MODE: "Station‑REAL",
+        PIPELINE: "4 → 0 → 1 → 2 → 4",
+        RESULT: "Φ∞",
+        ACTIVE: true
+    };
+
     document.getElementById("ort").textContent =
         JSON.stringify(RESPO_ORT, null, 2);
 
@@ -64,6 +86,15 @@ async function start() {
 
     document.getElementById("respo").textContent =
         JSON.stringify(RESPO, null, 2);
+
+    document.getElementById("osf_beam").textContent =
+        JSON.stringify(OSF_BEAM, null, 2);
+
+    document.getElementById("osf_phi").textContent =
+        JSON.stringify(OSF_PHI, null, 2);
+
+    document.getElementById("osf_station").textContent =
+        JSON.stringify(OSF_STATION, null, 2);
 }
 </script>
 
@@ -71,9 +102,8 @@ async function start() {
 
 <body onload="start()">
 
-<h1>RESPO · ORT‑LAGE</h1>
+<h1>RESPO · ORT‑LAGE · OSF</h1>
 
-<!-- DAS BILD / SYMBOL -->
 <div class="respoImage">⊙</div>
 
 <h2>ORT</h2>
@@ -84,6 +114,15 @@ async function start() {
 
 <h2>RESPO</h2>
 <pre id="respo">Lade…</pre>
+
+<h2>OSF – Beam</h2>
+<pre id="osf_beam">Lade…</pre>
+
+<h2>OSF – Φ∞</h2>
+<pre id="osf_phi">Lade…</pre>
+
+<h2>OSF – Station</h2>
+<pre id="osf_station">Lade…</pre>
 
 </body>
 </html>
