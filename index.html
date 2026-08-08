@@ -1,41 +1,6 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<title>RESPO · ORT‑LAGE · OSF</title>
-
-<style>
-body {
-    background:#000;
-    color:#0ff;
-    font-family:Consolas;
-    padding:20px;
-}
-h1 { color:#6cf; }
-h2 { color:#0f0; margin-top:25px; }
-pre {
-    background:#111;
-    padding:12px;
-    border:1px solid #333;
-    border-radius:6px;
-}
-.respoImage {
-    width:160px;
-    height:160px;
-    margin:20px auto;
-    border-radius:50%;
-    background: radial-gradient(circle, #001a33 0%, #003355 40%, #000 100%);
-    box-shadow: 0 0 40px #0ff, inset 0 0 40px #000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:60px;
-    color:#6cf;
-    text-shadow:0 0 20px #0ff;
-}
-</style>
-
 <script type="module">
+import { OSF_BEAM, OSF_PHI, OSF_STATION } from "./OUR.js";
+
 async function start() {
 
     const RESPO_ORT = {
@@ -51,30 +16,6 @@ async function start() {
         NAME: "RESPO-Ort-LAGE",
         STATUS: "VERBUNDEN",
         TYPE: "ORT-LAGE",
-        ACTIVE: true
-    };
-
-    const OSF_BEAM = {
-        ROOT: "NC/Creator",
-        LAGE: "REAL-4",
-        RESPO: "EDy.respoTMP",
-        ACTIVE: true,
-        SIGNAL: "BEAM:Φ∞"
-    };
-
-    const OSF_PHI = {
-        VALUE: Math.PI * (1 + Math.sqrt(5)) / 2,
-        LEVEL: "4er-Richtigkeit",
-        STATE: "∞‑Stabil",
-        READY: "82%"
-    };
-
-    const OSF_STATION = {
-        NAME: "OSF",
-        CORE: "ORT-LAGE",
-        MODE: "Station‑REAL",
-        PIPELINE: "4 → 0 → 1 → 2 → 4",
-        RESULT: "Φ∞",
         ACTIVE: true
     };
 
@@ -97,32 +38,3 @@ async function start() {
         JSON.stringify(OSF_STATION, null, 2);
 }
 </script>
-
-</head>
-
-<body onload="start()">
-
-<h1>RESPO · ORT‑LAGE · OSF</h1>
-
-<div class="respoImage">⊙</div>
-
-<h2>ORT</h2>
-<pre id="ort">Lade…</pre>
-
-<h2>LAGE</h2>
-<pre id="lage">Lade…</pre>
-
-<h2>RESPO</h2>
-<pre id="respo">Lade…</pre>
-
-<h2>OSF – Beam</h2>
-<pre id="osf_beam">Lade…</pre>
-
-<h2>OSF – Φ∞</h2>
-<pre id="osf_phi">Lade…</pre>
-
-<h2>OSF – Station</h2>
-<pre id="osf_station">Lade…</pre>
-
-</body>
-</html>
