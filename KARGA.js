@@ -1,15 +1,22 @@
-import { core } from "./CORE.js";
-import { diagnose } from "./DIAG.js";
-import { save } from "./STORE.js";
-import { ourMode } from "./OUR.js";
+export const KARGA = {
 
-export function karga(name) {
-  const result = core(name);
-  const diag   = diagnose(result);
-  const team   = ourMode(result);
+  scan(modules){
+    const found = [];
 
-  save(team);
+    for(const name in modules){
+      if(modules[name]){
+        found.push({
+          name,
+          type: typeof modules[name],
+          state: "FOUND"
+        });
+      }
+    }
 
-  return { result, diag, team };
-}
-
+    return {
+      karga: "OK",
+      count: found.length,
+      modules: found
+    };
+  }
+};
