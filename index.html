@@ -1,21 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-  <title>KARGA Engine</title>
-  <script type="module">
-    import { karga } from "./KARGA.js";
+  <meta charset="UTF-8">
+  <title>KARGA · LAR Sprint Engine</title>
 
-    function run() {
-      const name = document.getElementById("modul").value;
+  <style>
+    body{background:#000;color:#0ff;font-family:monospace;padding:20px;}
+    input{padding:8px;background:#111;color:#0ff;border:1px solid #0ff;}
+    button{padding:8px 16px;background:#111;color:#0ff;border:1px solid #0ff;}
+    pre{white-space:pre-wrap;border:1px solid #0ff;padding:20px;margin-top:20px;}
+  </style>
+
+  <script type="module">
+    import { karga } from "./team.js";        // NEUE KARGA v7
+    import { larSprint } from "./build.js";   // NEUE LAR Sprint v7
+
+    function runKarga(){
+      const name = document.getElementById("modul").value.trim();
       const out  = karga(name);
-      document.getElementById("out").innerText = JSON.stringify(out, null, 2);
+      document.getElementById("out").innerText =
+        JSON.stringify(out, null, 2);
     }
+
+    function runSprint(){
+      const name = document.getElementById("modul").value.trim();
+      const out  = larSprint(name);
+      document.getElementById("out").innerText =
+        JSON.stringify(out, null, 2);
+    }
+
+    window.runKarga = runKarga;
+    window.runSprint = runSprint;
   </script>
 </head>
+
 <body>
-  <h1>KARGA Engine</h1>
+
+  <h1>KARGA · LAR Sprint Engine</h1>
+
   <input id="modul" placeholder="tmp007 / vec118 / re200">
-  <button onclick="run()">Check</button>
-  <pre id="out"></pre>
+
+  <button onclick="runKarga()">KARGA</button>
+  <button onclick="runSprint()">LAR Sprint</button>
+
+  <pre id="out">Bereit…</pre>
+
 </body>
 </html>
